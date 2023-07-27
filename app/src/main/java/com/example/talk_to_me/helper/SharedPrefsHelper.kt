@@ -22,7 +22,7 @@ object SharedPrefsHelper {
     const val SESSION_TOKEN = "SESSION_TOKEN"
     const val NOTIFICATION_STATE = "NOTIFICATION_STATE"
     const val TCP_CONNECTION = "TCP_CONNECTION"
-    const val CALL_TYPE = "CALL_TYPE"
+    const val CALL_TYPE = "CALL_TYPEM"
 
 
 
