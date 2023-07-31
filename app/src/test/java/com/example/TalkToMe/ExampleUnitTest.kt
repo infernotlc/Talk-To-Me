@@ -1,4 +1,4 @@
-package com.example.talk_to_me
+package com.example.TalkToMe
 
 import org.junit.Test
 
