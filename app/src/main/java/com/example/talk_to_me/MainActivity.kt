@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.talk_to_me.composeui.RegisterCompose
 import com.example.talk_to_me.ui.theme.Talk_To_MeTheme
 
 class MainActivity : ComponentActivity() {
@@ -17,9 +18,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             Talk_To_MeTheme {
-                Navigation()
+          RegisterCompose()
+
+}
             }
         }
     }
-}
+
 
