@@ -1,4 +1,4 @@
-package com.example.talk_to_me.models
+package com.orioninc.TalkToMe.models
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

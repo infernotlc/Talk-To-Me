@@ -4,10 +4,10 @@ import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.talk_to_me.helper.SharedPrefsHelper
-import com.example.talk_to_me.models.Accounts
-import com.example.talk_to_me.models.AccountsData
-import com.example.talk_to_me.repository.AccountsRepository
+import com.orioninc.TalkToMe.helper.SharedPrefsHelper
+import com.orioninc.TalkToMe.models.Accounts
+import com.orioninc.TalkToMe.models.AccountsData
+import com.orioninc.TalkToMe.repository.AccountsRepository
 import com.genband.mobile.NotificationStates
 import com.genband.mobile.OnCompletionListener
 import com.genband.mobile.RegistrationApplicationListener
@@ -27,7 +27,7 @@ class RegisterViewModel(private val serviceProvider: ServiceProvider) : ViewMode
     private val accountsRepository = AccountsRepository()
     private val TAG = "RegisterViewModel"
 
-    // State Flows to hold the state of different properties
+     to hold the state of different properties
     private val _accounts = MutableStateFlow<Accounts?>(null)
     val accounts: StateFlow<Accounts?> = _accounts
 
@@ -92,7 +92,6 @@ class RegisterViewModel(private val serviceProvider: ServiceProvider) : ViewMode
             }
 
             override fun onFail(p0: MobileError?) {
-                // Use the MutableStateFlow's value property to update the state
                 _registrationFail.value = p0
                 Log.d(TAG, "Registration Fail: $p0")
             }
