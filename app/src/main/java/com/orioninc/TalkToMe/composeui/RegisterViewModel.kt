@@ -7,11 +7,20 @@ import com.orioninc.TalkToMe.helper.SharedPrefsHelper
 import com.orioninc.TalkToMe.models.Accounts
 import com.orioninc.TalkToMe.models.AccountsData
 import com.orioninc.TalkToMe.repository.AccountsRepository
-import com.genband.mobile.*
+import com.genband.mobile.NotificationStates
+import com.genband.mobile.OnCompletionListener
+import com.genband.mobile.RegistrationApplicationListener
+import com.genband.mobile.RegistrationService
+import com.genband.mobile.RegistrationStates
+import com.genband.mobile.ServiceProvider
+import com.genband.mobile.api.utilities.ICEServers
+import com.genband.mobile.api.utilities.MobileError
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import com.genband.mobile.api.utilities.*
+import com.genband.mobile.api.utilities.Configuration
 
-
-class RegisterViewModel(private val serviceProvider: ServiceProvider) : ViewModel(){
+class RegisterViewModel(private val serviceProvider: ServiceProvider) : ViewModel() {
 
 
     private val configuration: Configuration = Configuration.getInstance()

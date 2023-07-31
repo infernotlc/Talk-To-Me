@@ -2,8 +2,9 @@ package com.genband.mobilesdkdemo.ui.factory
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.talk_to_me.composeui.RegisterViewModel
 import com.genband.mobile.ServiceProvider
+import com.genband.mobilesdkdemo.ui.login.RegisterViewModel
+
 //ViewModelProvider.Factory, ViewModel örneklerini oluşturmak için kullanılan bir arayüzdür. ViewModel sınıflarının parametreleri veya bağımlılıkları olduğunda, ViewModelProvider.Factory kullanılarak bu bağımlılıklar ViewModel'lere aktarılabilir.
 
 class RegistrationViewModelFactory(private val serviceProvider: ServiceProvider) : ViewModelProvider.Factory {
