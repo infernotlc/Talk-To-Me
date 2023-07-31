@@ -1,4 +1,4 @@
-package com.example.talk_to_me.models
+package com.orioninc.TalkToMe.models
 
 data class Accounts(
         val accountNames : ArrayList<String> ?= arrayListOf(),

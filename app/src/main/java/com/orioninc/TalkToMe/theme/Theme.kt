@@ -1,4 +1,4 @@
-package com.example.talk_to_me.ui.theme
+package com.orioninc.TalkToMe.theme
 
 import android.app.Activity
 import android.os.Build

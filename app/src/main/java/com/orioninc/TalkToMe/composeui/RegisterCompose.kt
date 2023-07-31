@@ -1,4 +1,4 @@
-package com.example.talk_to_me.composeui
+package com.orioninc.TalkToMe.composeui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.LinearProgressIndicator
-import androidx.compose.material.darkColors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
@@ -25,15 +24,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.talk_to_me.R
 import com.example.talk_to_me.app.App
-import com.example.talk_to_me.models.AccountsData
+import com.orioninc.TalkToMe.models.AccountsData
 import com.genband.mobile.api.utilities.Configuration
 import com.genband.mobilesdkdemo.ui.factory.RegistrationViewModelFactory
 import com.genband.mobilesdkdemo.ui.login.RegisterViewModel
