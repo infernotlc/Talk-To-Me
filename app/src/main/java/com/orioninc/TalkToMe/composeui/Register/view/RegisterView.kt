@@ -1,6 +1,5 @@
-package com.orioninc.TalkToMe.composeui
+package com.orioninc.TalkToMe.composeui.Register.view
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -21,7 +20,6 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.*
-import androidx.compose.runtime.changelist.Operation.AdvanceSlotsBy.name
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,7 +29,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.talk_to_me.app.App
 import com.orioninc.TalkToMe.models.AccountsData
 import com.genband.mobile.api.utilities.Configuration
 import com.genband.mobilesdkdemo.ui.factory.RegistrationViewModelFactory
@@ -48,10 +45,6 @@ fun RegisterCompose() {
     val selectedUserDataState = rememberSaveable {
         mutableStateOf<AccountsData?>(null)
     }
-
-    val context = LocalContext.current
-    var expanded by remember { mutableStateOf(false) }
-
 
     val accountsData by viewModel.accounts.collectAsState()
     val accountNames = accountsData?.accountNames ?: emptyList()
@@ -80,7 +73,6 @@ fun RegisterCompose() {
                 )
 
                 // Other UI elements
-
 
                 Spacer(modifier = Modifier.height(16.dp))
 
@@ -122,7 +114,7 @@ fun AccountDropdownMenu(
     Box(modifier = Modifier.fillMaxWidth()) {
         OutlinedTextField(
             value = selectedUser?.device_user ?: "",
-            onValueChange = {},
+            onValueChange = { /* Add a dummy implementation or remove if not needed */ },
             enabled = false,
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Text),
             trailingIcon = {
@@ -149,7 +141,6 @@ fun AccountDropdownMenu(
                     text = { Text("Load") },
                     onClick = {}
                 )
-
             }
         }
     }
@@ -159,6 +150,4 @@ fun AccountDropdownMenu(
 private fun fetchAccountsFromDatabase(onUserSelected: (AccountsData) -> Unit) {
     val viewModel: RegisterViewModel = viewModel()
     val accountsDataList by viewModel.accounts.collectAsState()
-
-
 }
