@@ -1,4 +1,4 @@
-package com.example.talk_to_me.helper
+package com.orioninc.TalkToMe.helper
 
 
 import android.content.Context

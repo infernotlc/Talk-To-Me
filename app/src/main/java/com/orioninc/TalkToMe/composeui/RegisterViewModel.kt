@@ -3,10 +3,10 @@ package com.example.talk_to_me.composeui
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.talk_to_me.helper.SharedPrefsHelper
-import com.example.talk_to_me.models.Accounts
-import com.example.talk_to_me.models.AccountsData
-import com.example.talk_to_me.repository.AccountsRepository
+import com.orioninc.TalkToMe.helper.SharedPrefsHelper
+import com.orioninc.TalkToMe.models.Accounts
+import com.orioninc.TalkToMe.models.AccountsData
+import com.orioninc.TalkToMe.repository.AccountsRepository
 import com.genband.mobile.*
 import com.genband.mobile.api.utilities.*
 

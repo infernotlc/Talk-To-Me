@@ -1,7 +1,7 @@
-package com.example.talk_to_me.repository
+package com.orioninc.TalkToMe.repository
 
-import com.example.talk_to_me.models.Accounts
-import com.example.talk_to_me.source.FirebaseAccountsDataSource
+import com.orioninc.TalkToMe.models.Accounts
+import com.orioninc.TalkToMe.source.FirebaseAccountsDataSource
 
 
 class AccountsRepository() : IAccountsRepository {

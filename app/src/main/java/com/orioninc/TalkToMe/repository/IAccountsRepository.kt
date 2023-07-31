@@ -1,6 +1,6 @@
-package com.example.talk_to_me.repository
+package com.orioninc.TalkToMe.repository
 
-import com.example.talk_to_me.models.Accounts
+import com.orioninc.TalkToMe.models.Accounts
 
 
 interface IAccountsRepository {

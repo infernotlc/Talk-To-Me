@@ -1,4 +1,4 @@
-package com.example.talk_to_me.ui.theme
+package com.orioninc.TalkToMe.theme
 
 import android.app.Activity
 import android.os.Build
@@ -38,7 +38,7 @@ private val LightColorScheme = lightColorScheme(
 )
 
 @Composable
-fun Talk_To_MeTheme(
+fun TalkToMeTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
