@@ -1,5 +1,6 @@
-package com.example.talk_to_me.composeui
+package com.genband.mobilesdkdemo.ui.login
 
+import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,94 +8,127 @@ import com.example.talk_to_me.helper.SharedPrefsHelper
 import com.example.talk_to_me.models.Accounts
 import com.example.talk_to_me.models.AccountsData
 import com.example.talk_to_me.repository.AccountsRepository
-import com.genband.mobile.*
+import com.genband.mobile.NotificationStates
+import com.genband.mobile.OnCompletionListener
+import com.genband.mobile.RegistrationApplicationListener
+import com.genband.mobile.RegistrationService
+import com.genband.mobile.RegistrationStates
+import com.genband.mobile.ServiceProvider
+import com.genband.mobile.api.utilities.ICEServers
+import com.genband.mobile.api.utilities.MobileError
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import com.genband.mobile.api.utilities.*
+import com.genband.mobile.api.utilities.Configuration
+
+class RegisterViewModel(private val serviceProvider: ServiceProvider) : ViewModel() {
 
 
-class RegisterViewModel(private val serviceProvider: ServiceProvider) : ViewModel(){
-
-
-    private val configuration: Configuration = Configuration.getInstance()
-    private var accountsRepository = AccountsRepository()
-    val accounts = MutableLiveData<Accounts>()
+    private val accountsRepository = AccountsRepository()
     private val TAG = "RegisterViewModel"
 
+    // State Flows to hold the state of different properties
+    private val _accounts = MutableStateFlow<Accounts?>(null)
+    val accounts: StateFlow<Accounts?> = _accounts
 
-    val registrationStateChanged = MutableLiveData<RegistrationStates?>()
-    val registrationDropped = MutableLiveData<MobileError?>()
-    val onInternalError = MutableLiveData<MobileError?>()
-    val registrationSuccess = MutableLiveData<Boolean>()
-    val registrationFail = MutableLiveData<MobileError?>()
+    private val _registrationStateChanged = MutableStateFlow<RegistrationStates?>(null)
+    val registrationStateChanged: StateFlow<RegistrationStates?> = _registrationStateChanged
 
+    private val _registrationDropped = MutableStateFlow<MobileError?>(null)
+    val registrationDropped: StateFlow<MobileError?> = _registrationDropped
+
+    private val _onInternalError = MutableStateFlow<MobileError?>(null)
+    val onInternalError: StateFlow<MobileError?> = _onInternalError
+
+    private val _registrationSuccess = MutableStateFlow<Boolean?>(null)
+    val registrationSuccess: StateFlow<Boolean?> = _registrationSuccess
+
+    private val _registrationFail = MutableStateFlow<MobileError?>(null)
+    val registrationFail: StateFlow<MobileError?> = _registrationFail
+
+
+    // Other State Flows for different UI states can be added as needed
     companion object{
         val notificationStateChanged = MutableLiveData<NotificationStates?>()
     }
-    fun getAccountsFirebase(){
-        accountsRepository.getAccounts {
-            accounts.value = it
+
+
+    fun getAccountsFirebase() {
+        accountsRepository.getAccounts { accounts ->
+            // Use the MutableStateFlow's value property to update the state
+            _accounts.value = accounts
         }
     }
-
     fun getMobileSdkVersion(): String {
         return serviceProvider.version
     }
 
-    fun register(){
 
-        val registrationService : RegistrationService = serviceProvider.registrationService
+    fun register() {
+        val registrationService: RegistrationService = serviceProvider.registrationService
 
-        val registrationApplicationListener = object : RegistrationApplicationListener{
+        val registrationApplicationListener = object : RegistrationApplicationListener {
             override fun registrationStateChanged(p0: RegistrationStates?) {
-                registrationStateChanged.value=p0
+                _registrationStateChanged.value = p0
             }
+
             override fun registrationDropped(p0: MobileError?) {
-                registrationDropped.value = p0
+                _registrationDropped.value = p0
             }
+
             override fun notificationStateChanged(p0: NotificationStates?) {
-                notificationStateChanged.value = p0
-                when(p0){
-                    NotificationStates.CONNECTED -> SharedPrefsHelper.putString(SharedPrefsHelper.NOTIFICATION_STATE,"CONNECTED")
-                    NotificationStates.DISCONNECTED -> SharedPrefsHelper.putString(SharedPrefsHelper.NOTIFICATION_STATE,"DISCONNECTED")
-                    else -> SharedPrefsHelper.putString(SharedPrefsHelper.NOTIFICATION_STATE,"")
-                }
-
-
-
             }
+
             override fun onInternalError(p0: MobileError?) {
-                onInternalError.value = p0
+                _onInternalError.value = p0
             }
         }
         registrationService.setRegistrationApplicationListener(registrationApplicationListener)
-        registrationService.registerToServer(3600, object : OnCompletionListener{
+        registrationService.registerToServer(3600, object : OnCompletionListener {
             override fun onSuccess() {
-                registrationSuccess.value = true
-                SharedPrefsHelper.putBoolean(SharedPrefsHelper.SESSION_TOKEN,true)
-                Log.d(TAG,"Registration Success")
+                _registrationSuccess.value = true
+                SharedPrefsHelper.putBoolean(SharedPrefsHelper.SESSION_TOKEN, true)
+                Log.d(TAG, "Registration Success")
             }
+
             override fun onFail(p0: MobileError?) {
-                registrationFail.value = p0
-                Log.d(TAG,"Registration Fail: $p0")
+                // Use the MutableStateFlow's value property to update the state
+                _registrationFail.value = p0
+                Log.d(TAG, "Registration Fail: $p0")
             }
         })
     }
-    fun setSharedPrefs(accountsData: AccountsData, useTurn: Boolean){
-        SharedPrefsHelper.putString(SharedPrefsHelper.DEVICE_USER,accountsData.device_user)
-        SharedPrefsHelper.putString(SharedPrefsHelper.DEVICE_PASSWORD,accountsData.device_pass)
-        SharedPrefsHelper.putString(SharedPrefsHelper.DEFAULT_DOMAIN,accountsData.default_domain)
-        SharedPrefsHelper.putString(SharedPrefsHelper.REST_IP,accountsData.config.restServerIP)
-        SharedPrefsHelper.putString(SharedPrefsHelper.REST_PORT,accountsData.config.restServerPort)
-        SharedPrefsHelper.putString(SharedPrefsHelper.SOCKET_IP,accountsData.config.webSocketServerIP)
-        SharedPrefsHelper.putString(SharedPrefsHelper.SOCKET_PORT,accountsData.config.webSocketServerPort)
-        SharedPrefsHelper.putString(SharedPrefsHelper.PUSH_URL,accountsData.pushServerURL)
-        SharedPrefsHelper.putInt(SharedPrefsHelper.ICE_TIMEOUT,accountsData.config.ICECollectionTimeout)
-        SharedPrefsHelper.putStringSet(SharedPrefsHelper.TURN_ADDRESS, accountsData.ICEServers.servers.toSet())
-        SharedPrefsHelper.putBoolean(SharedPrefsHelper.USE_TURN,useTurn)
-        SharedPrefsHelper.putBoolean(SharedPrefsHelper.SESSION_TOKEN,true)
+
+
+}
+
+
+    fun setSharedPrefs(accountsData: AccountsData, useTurn: Boolean) {
+        SharedPrefsHelper.putString(SharedPrefsHelper.DEVICE_USER, accountsData.device_user)
+        SharedPrefsHelper.putString(SharedPrefsHelper.DEVICE_PASSWORD, accountsData.device_pass)
+        SharedPrefsHelper.putString(SharedPrefsHelper.DEFAULT_DOMAIN, accountsData.default_domain)
+        SharedPrefsHelper.putString(SharedPrefsHelper.REST_IP, accountsData.config.restServerIP)
+        SharedPrefsHelper.putString(SharedPrefsHelper.REST_PORT, accountsData.config.restServerPort)
+        SharedPrefsHelper.putString(
+            SharedPrefsHelper.SOCKET_IP,
+            accountsData.config.webSocketServerIP
+        )
+        SharedPrefsHelper.putString(
+            SharedPrefsHelper.SOCKET_PORT,
+            accountsData.config.webSocketServerPort
+        )
+        SharedPrefsHelper.putString(SharedPrefsHelper.PUSH_URL, accountsData.pushServerURL)
+        SharedPrefsHelper.putInt(SharedPrefsHelper.ICE_TIMEOUT, accountsData.config.ICECollectionTimeout)
+        SharedPrefsHelper.putStringSet(
+            SharedPrefsHelper.TURN_ADDRESS,
+            accountsData.ICEServers.servers.toSet()
+        )
+        SharedPrefsHelper.putBoolean(SharedPrefsHelper.USE_TURN, useTurn)
+        SharedPrefsHelper.putBoolean(SharedPrefsHelper.SESSION_TOKEN, true)
     }
 
-
-    fun setConfiguration(accountsData: AccountsData){
+    fun setConfiguration(accountsData: AccountsData) {
+     val configuration: Configuration = Configuration.getInstance()
         configuration.username = accountsData.device_user
         configuration.password = accountsData.device_pass
         configuration.restServerIp = accountsData.config.restServerIP
@@ -107,22 +141,22 @@ class RegisterViewModel(private val serviceProvider: ServiceProvider) : ViewMode
         configuration.webSocketServerIp = accountsData.config.webSocketServerIP
         configuration.webSocketServerPort = accountsData.config.webSocketServerPort.toInt()
 
-        Log.d(TAG,"Configurations: " + printConfiguration())
+        Log.d(TAG, "Configurations: " + printConfiguration())
     }
 
-    fun setAdvancedConfigurations(ringingFeedbackOption: String, tcpConnection: Boolean){
-        SharedPrefsHelper.putString(SharedPrefsHelper.RINGING_FEEDBACK_OPTION,ringingFeedbackOption)
-        SharedPrefsHelper.putBoolean(SharedPrefsHelper.TCP_CONNECTION,tcpConnection)
-        when(ringingFeedbackOption){
+    fun setAdvancedConfigurations(ringingFeedbackOption: String, tcpConnection: Boolean) {
+       val configuration: Configuration = Configuration.getInstance()
+        SharedPrefsHelper.putString(SharedPrefsHelper.RINGING_FEEDBACK_OPTION, ringingFeedbackOption)
+        SharedPrefsHelper.putBoolean(SharedPrefsHelper.TCP_CONNECTION, tcpConnection)
+        when (ringingFeedbackOption) {
             "APP" -> configuration.ringingFeedbackOption = RingingFeedbackOptions.APP
             "SERVER" -> configuration.ringingFeedbackOption = RingingFeedbackOptions.SERVER
             "AUTO" -> configuration.ringingFeedbackOption = RingingFeedbackOptions.AUTO
         }
     }
 
-
-
     private fun printConfiguration(): String {
+        val configuration: Configuration = Configuration.getInstance()
         // return all fields of configuration each in a new line with the following format:
         // field_name: field_value
         return "" +
@@ -135,6 +169,3 @@ class RegisterViewModel(private val serviceProvider: ServiceProvider) : ViewMode
                 "webSocketServerPort: ${configuration.webSocketServerPort}"
     }
 
-
-
-}
