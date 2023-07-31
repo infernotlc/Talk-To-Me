@@ -76,8 +76,8 @@ fun RegisterCompose() {
                     }
                 )
 
-                // Other UI elements like text fields, switches, and buttons
-                // ... (Not shown for brevity)
+                // Other UI elements
+
 
                 Spacer(modifier = Modifier.height(16.dp))
 
@@ -97,7 +97,7 @@ fun RegisterCompose() {
                 }
             }
 
-            // Show a progress indicator when the registration process is in progress
+            // Show a progress indicator when the registration process
             if (progressBarVisibleState.value) {
                 LinearProgressIndicator(
                     modifier = Modifier.fillMaxWidth(),
@@ -133,7 +133,7 @@ fun AccountDropdownMenu(
         )
 
         if (expanded) {
-            // Fetch accounts from the database here when the DropdownMenu is expanded
+            // Fetch accounts from the database
             fetchAccountsFromDatabase(onUserSelected)
         }
 
@@ -163,6 +163,5 @@ private fun fetchAccountsFromDatabase(onUserSelected: (AccountsData) -> Unit) {
     val viewModel: RegisterViewModel = viewModel()
     val accountsDataList by viewModel.accounts.collectAsState()
 
-    // The rest of the code to fetch accounts from the database using the ViewModel
-    // You may need to update the accountsDataList in the ViewModel using the fetched data
+
 }

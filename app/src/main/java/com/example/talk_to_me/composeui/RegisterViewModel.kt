@@ -27,7 +27,7 @@ class RegisterViewModel(private val serviceProvider: ServiceProvider) : ViewMode
     private val accountsRepository = AccountsRepository()
     private val TAG = "RegisterViewModel"
 
-    // State Flows to hold the state of different properties
+     to hold the state of different properties
     private val _accounts = MutableStateFlow<Accounts?>(null)
     val accounts: StateFlow<Accounts?> = _accounts
 
@@ -92,7 +92,6 @@ class RegisterViewModel(private val serviceProvider: ServiceProvider) : ViewMode
             }
 
             override fun onFail(p0: MobileError?) {
-                // Use the MutableStateFlow's value property to update the state
                 _registrationFail.value = p0
                 Log.d(TAG, "Registration Fail: $p0")
             }
