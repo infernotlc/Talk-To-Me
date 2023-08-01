@@ -6,13 +6,13 @@ plugins {
 }
 
 android {
-    namespace 'com.orioninc.TalkToMe'
-    compileSdk 33
+    namespace 'com.orion.talktome'
+    compileSdk 34
 
     defaultConfig {
-        applicationId "com.orioninc.TalkToMe"
+        applicationId "com.orion.talktome"
         minSdk 26
-        targetSdk 33
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
@@ -37,6 +37,7 @@ android {
     }
     buildFeatures {
         compose true
+        viewBinding = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion '1.3.2'
@@ -52,6 +53,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-database-ktx:20.2.2'
     implementation 'androidx.work:work-runtime-ktx:2.7.1'
     def nav_version = "2.6.0"
+    def lifecycle_version = "2.6.1"
+    def arch_version = "2.2.0"
 
     implementation "androidx.navigation:navigation-compose:$nav_version"
     implementation "androidx.compose.runtime:runtime-livedata:1.4.3"
@@ -59,13 +62,60 @@ dependencies {
     implementation "androidx.compose.ui:ui:$compose_version"
     implementation "androidx.compose.material:material:$compose_version"
     implementation "androidx.compose.ui:ui-tooling:$compose_version"
-    implementation "androidx.activity:activity-compose:1.3.0-alpha08"
-    implementation 'androidx.core:core-ktx:1.8.0'
-    implementation platform("com.google.firebase:firebase-bom:32.2.0")
-    implementation platform('org.jetbrains.kotlin:kotlin-bom:1.8.0')
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
+
+    //Jetpack Compose
     implementation 'androidx.activity:activity-compose:1.5.1'
+    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
+    implementation 'androidx.compose.runtime:runtime-livedata:1.0.4'
     implementation platform('androidx.compose:compose-bom:2022.10.00')
+
+    // ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
+
+    // LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
+    // Lifecycles only (without ViewModel or LiveData)
+    implementation "androidx.lifecycle:lifecycle-runtime:$lifecycle_version"
+
+    // Saved state module for ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
+
+    // Annotation processor
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+    // alternately - if using Java8, use the following instead of lifecycle-compiler
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+
+    // optional - helpers for implementing LifecycleOwner in a Service
+    implementation "androidx.lifecycle:lifecycle-service:$lifecycle_version"
+
+    // optional - ProcessLifecycleOwner provides a lifecycle for the whole application process
+    implementation "androidx.lifecycle:lifecycle-process:$lifecycle_version"
+
+    // optional - ReactiveStreams support for LiveData
+    implementation "androidx.lifecycle:lifecycle-reactivestreams:$lifecycle_version"
+
+    // optional - Test helpers for LiveData
+    testImplementation "androidx.arch.core:core-testing:$arch_version"
+
+    // optional - Test helpers for Lifecycle runtime
+    testImplementation "androidx.lifecycle:lifecycle-runtime-testing:$lifecycle_version"
+
+
+    //Firebase
+    implementation platform("com.google.firebase:firebase-bom:32.2.0")
+
+    //Jetbrains
+    implementation platform('org.jetbrains.kotlin:kotlin-bom:1.8.0')
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1'
+
+    // retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+    //Glide Dependency
+    implementation 'com.github.bumptech.glide:glide:4.13.2'
+
     implementation 'androidx.compose.ui:ui'
     implementation 'androidx.compose.ui:ui-graphics'
     implementation 'androidx.compose.ui:ui-tooling-preview'
