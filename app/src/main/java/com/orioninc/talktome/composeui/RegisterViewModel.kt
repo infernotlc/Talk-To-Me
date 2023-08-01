@@ -27,9 +27,9 @@ class RegisterViewModel(private val serviceProvider: ServiceProvider) : ViewMode
     private val accountsRepository = AccountsRepository()
     private val TAG = "RegisterViewModel"
 
-     to hold the state of different properties
-    private val _accounts = MutableStateFlow<Accounts?>(null)
-    val accounts: StateFlow<Accounts?> = _accounts
+     //to hold the state of different properties
+    private val _accountsData = MutableStateFlow<AccountsData?>(null)
+    val accountsData: StateFlow<AccountsData?> = _accountsData
 
     private val _registrationStateChanged = MutableStateFlow<RegistrationStates?>(null)
     val registrationStateChanged: StateFlow<RegistrationStates?> = _registrationStateChanged
@@ -55,10 +55,25 @@ class RegisterViewModel(private val serviceProvider: ServiceProvider) : ViewMode
 
     fun getAccountsFirebase() {
         accountsRepository.getAccounts { accounts ->
-            // Use the MutableStateFlow's value property to update the state
-            _accounts.value = accounts
+val accountsData=accounts?.toAccountsData()
+            _accountsData.value=accountsData
         }
     }
+
+    private fun Accounts.toAccountsData(): AccountsData {
+        // Implement the mapping logic here based on the structure of Accounts and AccountsData
+        // For example, you can use Accounts properties to construct AccountsData
+        return AccountsData(
+            device_user = this.device_user,
+            device_pass = this.device_pass,
+            default_domain = this.default_domain,
+            // ... map other properties as needed
+        )
+    }
+
+
+
+
     fun getMobileSdkVersion(): String {
         return serviceProvider.version
     }
