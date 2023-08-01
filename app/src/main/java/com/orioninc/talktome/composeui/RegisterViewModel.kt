@@ -4,10 +4,10 @@ import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.orioninc.TalkToMe.helper.SharedPrefsHelper
-import com.orioninc.TalkToMe.models.Accounts
-import com.orioninc.TalkToMe.models.AccountsData
-import com.orioninc.TalkToMe.repository.AccountsRepository
+import com.orioninc.talktome.helper.SharedPrefsHelper
+import com.orioninc.talktome.models.Accounts
+import com.orioninc.talktome.models.AccountsData
+import com.orioninc.talktome.repository.AccountsRepository
 import com.genband.mobile.NotificationStates
 import com.genband.mobile.OnCompletionListener
 import com.genband.mobile.RegistrationApplicationListener

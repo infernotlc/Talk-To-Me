@@ -1,4 +1,4 @@
-package com.orioninc.TalkToMe.theme
+package com.orioninc.talktome.theme
 
 import androidx.compose.ui.graphics.Color
 

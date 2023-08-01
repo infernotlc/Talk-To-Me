@@ -1,4 +1,4 @@
-package com.example.TalkToMe
+package com.example.talktome
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

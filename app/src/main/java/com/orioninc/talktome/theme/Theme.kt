@@ -1,4 +1,4 @@
-package com.orioninc.TalkToMe.theme
+package com.orioninc.talktome.theme
 
 import android.app.Activity
 import android.os.Build

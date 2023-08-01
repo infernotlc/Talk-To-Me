@@ -1,10 +1,10 @@
-package com.orioninc.TalkToMe
+package com.orioninc.talktome
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.orioninc.TalkToMe.theme.TalkToMeTheme
-import com.orioninc.TalkToMe.composeui.RegisterCompose
+import com.orioninc.talktome.theme.TalkToMeTheme
+import com.orioninc.talktome.composeui.RegisterCompose
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

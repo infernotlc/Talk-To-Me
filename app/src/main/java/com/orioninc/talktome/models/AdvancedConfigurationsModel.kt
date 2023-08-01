@@ -1,4 +1,4 @@
-package com.orioninc.TalkToMe.models
+package com.orioninc.talktome.models
 
 data class AdvancedConfigurationsModel(
     val ringingFeedbackOption: String,
