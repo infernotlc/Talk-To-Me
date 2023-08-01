@@ -1,4 +1,4 @@
-package com.orioninc.TalkToMe.composeui
+package com.orioninc.talktome.composeui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,7 +29,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.talk_to_me.app.App
-import com.orioninc.TalkToMe.models.AccountsData
+import com.orioninc.talktome.models.AccountsData
 import com.genband.mobile.api.utilities.Configuration
 import com.genband.mobilesdkdemo.ui.factory.RegistrationViewModelFactory
 import com.genband.mobilesdkdemo.ui.login.RegisterViewModel

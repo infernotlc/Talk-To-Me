@@ -1,7 +1,7 @@
-package com.orioninc.TalkToMe.source
+package com.orioninc.talktome.source
 
-import com.orioninc.TalkToMe.models.Accounts
-import com.orioninc.TalkToMe.models.AccountsData
+import com.orioninc.talktome.models.Accounts
+import com.orioninc.talktome.models.AccountsData
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
