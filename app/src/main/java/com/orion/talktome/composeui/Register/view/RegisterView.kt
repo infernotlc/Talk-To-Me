@@ -1,7 +1,10 @@
 package com.orion.talktome.composeui.Register.view
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -13,21 +16,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.text.trimmedLength
+import com.orion.talktome.R
 import com.orion.talktome.composeui.Register.model.AccountDropDownMenu
-
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun RegisterCompose() {
-    // Sample account names and ringing feedback options
-    val accountNames = listOf("Account 1", "Account 2", "Account 3")
-    val ringingFeedbackOptions = listOf("Option 1", "Option 2", "Option 3")
 
     // Remembering the state of input fields
     val usernameState by rememberSaveable { mutableStateOf("") }
@@ -49,78 +50,76 @@ fun RegisterCompose() {
     MaterialTheme {
         Scaffold(
             content = {
-                Column(
+                LazyColumn(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .padding(horizontal = 16.dp)
+                        .fillMaxSize(),
+                        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp)
                 ) {
-                    AccountDropDownMenu()
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
+                    item {
+                        Spacer(modifier = Modifier.height(16.dp))
+                        AccountDropDownMenu()
+                        Spacer(modifier = Modifier.height(8.dp))
                     // Username field
-                    OutlinedTextField(
+                    TextField(
                         value = usernameState,
                         onValueChange = { usernameState },
-                        label = { "Username" }
+                        label = { Text(text =  "Username") },
+                        leadingIcon = {
+                            Image(
+                                painter = painterResource(id = R.drawable.baseline_account_box_24), // Replace with your icon resource
+                                contentDescription = "Profile Icon"
+                            )
+                        }
                     )
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    // Password field
-                    OutlinedTextField(
+                        Spacer(modifier = Modifier.height(8.dp))
+                        // Password field
+                    TextField(
                         value = passwordState,
                         onValueChange = { passwordState },
-                        label = { "Password"},
-                        visualTransformation = PasswordVisualTransformation()
+                        label = { Text(text =  "Password")},
+                        visualTransformation = PasswordVisualTransformation(),
+                        leadingIcon = {
+                            Image(
+                                painter = painterResource(id = R.drawable.baseline_lock_24), // Replace with your icon resource
+                                contentDescription = "Profile Icon"
+                            )
+                        }
                     )
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    // Rest IP field
-                    OutlinedTextField(
+                        Spacer(modifier = Modifier.height(8.dp))
+                        // Rest IP field
+                    TextField(
                         value = restIpState,
                         onValueChange = { restIpState = it },
-                        label = { "Rest IP" }
+                        label = { Text(text =  "Rest IP") }
                     )
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    // Rest Port field
-                    OutlinedTextField(
+                        Spacer(modifier = Modifier.height(8.dp))
+                        // Rest Port field
+                    TextField(
                         value = restPortState,
                         onValueChange = { restPortState },
-                        label = {"Rest Port"},
+                        label = { Text(text = "Rest Port")},
                         keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
                     )
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
+                    Spacer(modifier = Modifier.height(8.dp))
                     // Socket Port field
-                    OutlinedTextField(
+                    TextField(
                         value = socketPortState,
                         onValueChange = { socketPortState },
-                        label = {"Socket Port"},
+                        label = { Text(text = "Socket Port")},
                         keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
                     )
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
+                        Spacer(modifier = Modifier.height(8.dp))
                     // ICE Timeout field
-                    OutlinedTextField(
+                    TextField(
                         value = iceTimeoutState,
                         onValueChange = { iceTimeoutState },
-                        label = {"ICE Timeout"},
+                        label = { Text(text = "ICE Timeout")},
                         keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
                     )
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
+                        Spacer(modifier = Modifier.height(8.dp))
                     // Ringing Feedback Option dropdown
                     AccountDropDownMenu()
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
+                        Spacer(modifier = Modifier.height(8.dp))
                     // Use Turn switch
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -134,12 +133,14 @@ fun RegisterCompose() {
                         )
                         Switch(
                             checked = useTurnState,
-                            onCheckedChange = { useTurnState}
+                            onCheckedChange = { useTurnState = it},
+                            colors = SwitchDefaults.colors(
+                                checkedTrackColor = Color.Blue,
+                                uncheckedThumbColor = Color.Gray
+                            )
                         )
                     }
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
+                        Spacer(modifier = Modifier.height(8.dp))
                     // TCP Connection Keep Alive switch
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -153,18 +154,32 @@ fun RegisterCompose() {
                         )
                         Switch(
                             checked = tcpConnectionKeepAliveState,
-                            onCheckedChange = { tcpConnectionKeepAliveState }
+                            onCheckedChange = { tcpConnectionKeepAliveState = it },
+                            colors = SwitchDefaults.colors(
+                                checkedTrackColor = Color.Blue,
+                                uncheckedThumbColor = Color.Gray
+                            )
                         )
                     }
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
+                        Spacer(modifier = Modifier.height(8.dp))
                     // Submit button
-                    Button(
-                        onClick = onLoginButtonClick,
-                        enabled = !usernameState.isBlank() && !passwordState.isBlank()
-                    ) {
-                        Text(text = "Submit")
+                        Button(
+                            onClick = onLoginButtonClick,
+                            enabled = !usernameState.isBlank() && !passwordState.isBlank(),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 8.dp) // Add vertical padding to create spacing
+                                .background(Color.Gray),
+                            shape = MaterialTheme.shapes.medium, // Apply a shape to the button (rounded corners)
+                            contentPadding = PaddingValues(2.dp) // Add padding inside the button
+                        ) {
+                            Text(
+                                text = "Submit",
+                                color = Color.White,
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
                     }
                 }
             }
