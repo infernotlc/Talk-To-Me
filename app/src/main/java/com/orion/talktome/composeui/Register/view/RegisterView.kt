@@ -31,7 +31,7 @@ import com.orion.talktome.composeui.Register.model.AccountDropDownMenu
 fun RegisterCompose() {
 
     // Remembering the state of input fields
-    val usernameState by rememberSaveable { mutableStateOf("") }
+    var usernameState by rememberSaveable { mutableStateOf("") }
     var passwordState by remember { mutableStateOf("") }
     var restIpState by remember { mutableStateOf("") }
     var restPortState by remember { mutableStateOf("") }
@@ -62,7 +62,7 @@ fun RegisterCompose() {
                     // Username field
                     TextField(
                         value = usernameState,
-                        onValueChange = { usernameState },
+                        onValueChange = { usernameState = it },
                         label = { Text(text =  "Username") },
                         leadingIcon = {
                             Image(
@@ -75,7 +75,7 @@ fun RegisterCompose() {
                         // Password field
                     TextField(
                         value = passwordState,
-                        onValueChange = { passwordState },
+                        onValueChange = { passwordState = it },
                         label = { Text(text =  "Password")},
                         visualTransformation = PasswordVisualTransformation(),
                         leadingIcon = {
@@ -96,7 +96,7 @@ fun RegisterCompose() {
                         // Rest Port field
                     TextField(
                         value = restPortState,
-                        onValueChange = { restPortState },
+                        onValueChange = { restPortState = it },
                         label = { Text(text = "Rest Port")},
                         keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
                     )
@@ -104,7 +104,7 @@ fun RegisterCompose() {
                     // Socket Port field
                     TextField(
                         value = socketPortState,
-                        onValueChange = { socketPortState },
+                        onValueChange = { socketPortState = it },
                         label = { Text(text = "Socket Port")},
                         keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
                     )
@@ -112,7 +112,7 @@ fun RegisterCompose() {
                     // ICE Timeout field
                     TextField(
                         value = iceTimeoutState,
-                        onValueChange = { iceTimeoutState },
+                        onValueChange = { iceTimeoutState = it },
                         label = { Text(text = "ICE Timeout")},
                         keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
                     )
