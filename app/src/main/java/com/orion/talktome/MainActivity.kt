@@ -7,6 +7,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.orion.talktome.composeui.Register.view.RegisterCompose
+import com.orion.talktome.repository.AccountsRepository
 import com.orion.talktome.theme.TalkToMeTheme
 
 class MainActivity : ComponentActivity() {

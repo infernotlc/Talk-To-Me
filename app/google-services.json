@@ -82,7 +82,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:916608543790:android:84334523d5fe3ee428c3bf",
         "android_client_info": {
-          "package_name": "com.orion.talktome"
+          "package_name" :"com.orion.talktome"
         }
       },
       "oauth_client": [
