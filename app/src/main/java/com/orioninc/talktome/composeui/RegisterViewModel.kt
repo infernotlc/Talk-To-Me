@@ -23,13 +23,11 @@ import com.genband.mobile.api.utilities.Configuration
 
 class RegisterViewModel(private val serviceProvider: ServiceProvider) : ViewModel() {
 
-
     private val accountsRepository = AccountsRepository()
     private val TAG = "RegisterViewModel"
 
-     //to hold the state of different properties
-    private val _accountsData = MutableStateFlow<AccountsData?>(null)
-    val accountsData: StateFlow<AccountsData?> = _accountsData
+    private val _accounts = MutableStateFlow<Accounts?>(null)
+    val accounts: StateFlow<Accounts?> = _accounts
 
     private val _registrationStateChanged = MutableStateFlow<RegistrationStates?>(null)
     val registrationStateChanged: StateFlow<RegistrationStates?> = _registrationStateChanged
@@ -46,38 +44,19 @@ class RegisterViewModel(private val serviceProvider: ServiceProvider) : ViewMode
     private val _registrationFail = MutableStateFlow<MobileError?>(null)
     val registrationFail: StateFlow<MobileError?> = _registrationFail
 
-
-    // Other State Flows for different UI states can be added as needed
-    companion object{
+    companion object {
         val notificationStateChanged = MutableLiveData<NotificationStates?>()
     }
 
-
     fun getAccountsFirebase() {
         accountsRepository.getAccounts { accounts ->
-val accountsData=accounts?.toAccountsData()
-            _accountsData.value=accountsData
+            _accounts.value = accounts
         }
     }
-
-    private fun Accounts.toAccountsData(): AccountsData {
-        // Implement the mapping logic here based on the structure of Accounts and AccountsData
-        // For example, you can use Accounts properties to construct AccountsData
-        return AccountsData(
-            device_user = this.device_user,
-            device_pass = this.device_pass,
-            default_domain = this.default_domain,
-            // ... map other properties as needed
-        )
-    }
-
-
-
 
     fun getMobileSdkVersion(): String {
         return serviceProvider.version
     }
-
 
     fun register() {
         val registrationService: RegistrationService = serviceProvider.registrationService
@@ -114,9 +93,6 @@ val accountsData=accounts?.toAccountsData()
     }
 
 
-}
-
-
     fun setSharedPrefs(accountsData: AccountsData, useTurn: Boolean) {
         SharedPrefsHelper.putString(SharedPrefsHelper.DEVICE_USER, accountsData.device_user)
         SharedPrefsHelper.putString(SharedPrefsHelper.DEVICE_PASSWORD, accountsData.device_pass)
@@ -132,7 +108,10 @@ val accountsData=accounts?.toAccountsData()
             accountsData.config.webSocketServerPort
         )
         SharedPrefsHelper.putString(SharedPrefsHelper.PUSH_URL, accountsData.pushServerURL)
-        SharedPrefsHelper.putInt(SharedPrefsHelper.ICE_TIMEOUT, accountsData.config.ICECollectionTimeout)
+        SharedPrefsHelper.putInt(
+            SharedPrefsHelper.ICE_TIMEOUT,
+            accountsData.config.ICECollectionTimeout
+        )
         SharedPrefsHelper.putStringSet(
             SharedPrefsHelper.TURN_ADDRESS,
             accountsData.ICEServers.servers.toSet()
@@ -142,7 +121,7 @@ val accountsData=accounts?.toAccountsData()
     }
 
     fun setConfiguration(accountsData: AccountsData) {
-     val configuration: Configuration = Configuration.getInstance()
+        val configuration: Configuration = Configuration.getInstance()
         configuration.username = accountsData.device_user
         configuration.password = accountsData.device_pass
         configuration.restServerIp = accountsData.config.restServerIP
@@ -159,8 +138,11 @@ val accountsData=accounts?.toAccountsData()
     }
 
     fun setAdvancedConfigurations(ringingFeedbackOption: String, tcpConnection: Boolean) {
-       val configuration: Configuration = Configuration.getInstance()
-        SharedPrefsHelper.putString(SharedPrefsHelper.RINGING_FEEDBACK_OPTION, ringingFeedbackOption)
+        val configuration: Configuration = Configuration.getInstance()
+        SharedPrefsHelper.putString(
+            SharedPrefsHelper.RINGING_FEEDBACK_OPTION,
+            ringingFeedbackOption
+        )
         SharedPrefsHelper.putBoolean(SharedPrefsHelper.TCP_CONNECTION, tcpConnection)
         when (ringingFeedbackOption) {
             "APP" -> configuration.ringingFeedbackOption = RingingFeedbackOptions.APP
@@ -182,4 +164,5 @@ val accountsData=accounts?.toAccountsData()
                 "webSocketServerIp: ${configuration.webSocketServerIp}" +
                 "webSocketServerPort: ${configuration.webSocketServerPort}"
     }
+}
 
