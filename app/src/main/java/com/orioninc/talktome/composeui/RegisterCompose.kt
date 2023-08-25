@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.orioninc.talktome.models.AccountsData
@@ -40,7 +41,6 @@ fun RegisterCompose() {
             (LocalContext.current.applicationContext as App).serviceProvider
         )
     )
-
     var userNameTextFieldValue by rememberSaveable { mutableStateOf("") }
     var passwordTextFieldValue by rememberSaveable { mutableStateOf("") }
     var restIPTextFieldValue by rememberSaveable { mutableStateOf("") }
@@ -62,7 +62,6 @@ fun RegisterCompose() {
     val useTurnSwitchState by remember { mutableStateOf(false) }
 
 
-
     MaterialTheme(colorScheme = darkColorScheme()) {
         Box(
             modifier = Modifier.fillMaxSize(),
@@ -82,6 +81,20 @@ fun RegisterCompose() {
                 )
 
                 // Other UI elements
+                Text("Username")
+                OutlinedTextField(
+                    value = userNameTextFieldValue,
+                    onValueChange = { userNameTextFieldValue = it },
+                    label = { Text(text = "Enter Username") }
+                )
+                Text("Password")
+                OutlinedTextField(
+                    value = passwordTextFieldValue,
+                    onValueChange = { passwordTextFieldValue = it },
+                    label = { Text(text = "Enter Password") }
+                )
+                // if working add more
+
 
                 Spacer(modifier = Modifier.height(16.dp))
                 selectedUserDataState?.let { user ->
@@ -236,3 +249,6 @@ fun DropdownMenuItem(
         Text(text = accountName)
     }
 }
+
+
+

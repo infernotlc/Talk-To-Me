@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace 'com.orioninc.TalkToMe'
+    namespace 'com.orioninc.talktome'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.orioninc.TalkToMe"
+        applicationId "com.orioninc.talktome"
         minSdk 26
         targetSdk 34
         versionCode 1
